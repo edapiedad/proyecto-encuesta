@@ -11,7 +11,7 @@
     <style>
         body {
             font-family: 'Press Start 2P', cursive;
-            background-image: url('https://www.minecraft.net/etc.clientlibs/minecraft/clientlibs/main/resources/img/bg-texture.png');
+            /* Se eliminó la imagen de fondo que daba error 404 */
             background-color: #5C9A2E;
         }
         .minecraft-btn {
@@ -117,7 +117,6 @@
             };
 
             try {
-                // --- ¡CORRECCIÓN IMPORTANTE! ---
                 // La URL ahora usa https:// para una conexión segura.
                 const response = await fetch('https://edapiedad.pythonanywhere.com/submit', {
                     method: 'POST',
