@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta Minecraft: Aventura de Inglés</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Press Start 2P', cursive;
+            background-image: url('https://www.minecraft.net/etc.clientlibs/minecraft/clientlibs/main/resources/img/bg-texture.png');
+            background-color: #5C9A2E;
+        }
+        .minecraft-btn {
+            background-color: #7F7F7F; border: 4px solid #373737; color: white;
+            padding: 1rem 2rem; text-shadow: 2px 2px #373737;
+            box-shadow: inset -4px -4px 0px 0px #545454, inset 4px 4px 0px 0px #A8A8A8;
+            transition: all 0.1s ease-in-out;
+        }
+        .minecraft-btn:hover { background-color: #8a8a8a; cursor: pointer; }
+        .minecraft-btn:active { box-shadow: inset 2px 2px 0px 0px #545454; transform: translateY(2px); }
+        .question-card {
+            background-color: rgba(0, 0, 0, 0.6); border: 6px solid #5E3A1E;
+            padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+        }
+        .progress-bar-container { background-color: #373737; border: 4px solid #545454; padding: 4px; }
+        .progress-bar {
+            background-color: #4CAF50; height: 20px; width: 0%; transition: width 0.5s ease-in-out;
+            box-shadow: inset -2px -2px 0px 0px #388E3C, inset 2px 2px 0px 0px #81C784;
+        }
+        .custom-radio input[type="radio"] { display: none; }
+        .custom-radio label {
+            display: block; padding: 1rem; background-color: #C6C6C6;
+            border: 4px solid #7B7B7B; margin-bottom: 0.5rem; color: #373737;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .custom-radio input[type="radio"]:checked + label {
+            background-color: #FFD700; border-color: #B8860B;
+            color: white; text-shadow: 1px 1px #B8860B;
+        }
+        .custom-radio label:hover { background-color: #dcdcdc; }
+        textarea {
+            background-color: #C6C6C6; border: 4px solid #7B7B7B; padding: 1rem;
+            width: 100%; min-height: 100px; color: #373737; outline: none;
+        }
+        textarea:focus { border-color: #B8860B; }
+    </style>
+</head>
+<body class="text-white p-4 sm:p-8">
+
+    <div id="survey-container" class="max-w-3xl mx-auto">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-5xl mb-2 text-shadow-lg">ENCUESTA MINECRAFT</h1>
+            <p class="text-lg sm:text-xl">¡Tu Aventura de Inglés Comienza!</p>
+        </header>
+        <div class="mb-8">
+            <p class="mb-2 text-center">Progreso de la Misión:</p>
+            <div class="progress-bar-container"><div id="progressBar" class="progress-bar"></div></div>
+        </div>
+        <form id="minecraftSurvey">
+            <div class="question-card" data-question><p class="text-lg mb-4">1. ¿Juegas "Minecraft"?</p><div class="custom-radio"><input type="radio" id="q1a" name="q1" value="si"><label for="q1a">Sí</label><input type="radio" id="q1b" name="q1" value="no"><label for="q1b">No</label></div></div>
+            <div class="question-card" data-question><p class="text-lg mb-4">2. ¿Con qué frecuencia juegas "Minecraft"?</p><div class="custom-radio"><input type="radio" id="q2a" name="q2" value="todos_los_dias"><label for="q2a">Todos los días</label><input type="radio" id="q2b" name="q2" value="varias_veces_semana"><label for="q2b">Varias veces a la semana</label><input type="radio" id="q2c" name="q2" value="una_vez_mes"><label for="q2c">Una vez al mes</label><input type="radio" id="q2d" name="q2" value="nunca"><label for="q2d">Nunca</label></div></div>
+            <div class="question-card" data-question><p class="text-lg mb-4">3. ¿Utilizas el idioma inglés cuando juegas "Minecraft"?</p><div class="custom-radio"><input type="radio" id="q3a" name="q3" value="si"><label for="q3a">Sí</label><input type="radio" id="q3b" name="q3" value="no"><label for="q3b">No</label></div></div>
+            <div class="question-card" data-question><p class="text-lg mb-4">4. ¿Crees que jugar "Minecraft" te ayuda a mejorar en tus clases de inglés?</p><div class="custom-radio"><input type="radio" id="q4a" name="q4" value="si"><label for="q4a">Sí</label><input type="radio" id="q4b" name="q4" value="no"><label for="q4b">No</label></div></div>
+            <div class="question-card" data-question><p class="text-lg mb-4">5. ¿Te gustaría que se usara "Minecraft" en tus clases de inglés? ¿Por qué?</p><div class="custom-radio"><input type="radio" id="q5a" name="q5_choice" value="si"><label for="q5a">Sí</label><input type="radio" id="q5b" name="q5_choice" value="no"><label for="q5b">No</label></div><textarea id="q5_reason" class="mt-4" placeholder="Escribe aquí por qué..."></textarea></div>
+            <div class="question-card" data-question><p class="text-lg mb-4">6. ¿Has mejorado tu rendimiento en inglés desde que juegas "Minecraft"? ¿De qué manera?</p><div class="custom-radio"><input type="radio" id="q6a" name="q6_choice" value="si"><label for="q6a">Sí</label><input type="radio" id="q6b" name="q6_choice" value="no"><label for="q6b">No</label></div><textarea id="q6_reason" class="mt-4" placeholder="Cuéntanos cómo has mejorado..."></textarea></div>
+            <div class="question-card" data-question><p class="text-lg mb-4">7. ¿Jugar "Minecraft" te motiva a aprender inglés?</p><div class="custom-radio"><input type="radio" id="q7a" name="q7" value="si"><label for="q7a">Sí</label><input type="radio" id="q7b" name="q7" value="no"><label for="q7b">No</label></div></div>
+            <div class="question-card" data-question><p class="text-lg mb-4">8. ¿Participas en comunidades o foros en inglés relacionados con "Minecraft"?</p><div class="custom-radio"><input type="radio" id="q8a" name="q8" value="frecuentemente"><label for="q8a">Frecuentemente</label><input type="radio" id="q8b" name="q8" value="a_veces"><label for="q8b">A veces</label><input type="radio" id="q8c" name="q8" value="nunca"><label for="q8c">Nunca</label></div></div>
+            <div class="question-card" data-question><p class="text-lg mb-4">9. ¿Aplicas el vocabulario obtenido en "Minecraft" en las clases de inglés?</p><div class="custom-radio"><input type="radio" id="q9a" name="q9" value="si"><label for="q9a">Sí</label><input type="radio" id="q9b" name="q9" value="no"><label for="q9b">No</label></div></div>
+            <div class="question-card" data-question><p class="text-lg mb-4">10. ¿Has mejorado tu pronunciación en las clases de inglés gracias al juego?</p><div class="custom-radio"><input type="radio" id="q10a" name="q10" value="si"><label for="q10a">Sí</label><input type="radio" id="q10b" name="q10" value="no"><label for="q10b">No</label></div></div>
+            <div class="text-center mt-8"><button type="submit" class="minecraft-btn text-2xl">Finalizar Misión</button></div>
+        </form>
+    </div>
+
+    <div id="thank-you-message" class="hidden max-w-3xl mx-auto text-center">
+        <svg class="w-24 h-24 mx-auto mb-4" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="diamondGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#B9F2FF;stop-opacity:1" /><stop offset="100%" style="stop-color:#54A2B1;stop-opacity:1" /></linearGradient></defs><path fill="#54A2B1" d="M50 0 L100 50 L50 100 L0 50 Z" /><path fill="#7DE2F7" d="M50 0 L10 50 L50 100 L90 50 Z" /><path fill="url(#diamondGradient)" d="M50 5 L85 50 L50 95 L15 50 Z" /><path fill="none" stroke="#FFFFFF" stroke-width="3" d="M50 5 L85 50 L50 95 L15 50 Z" /></svg>
+        <h2 class="text-4xl mb-4">¡Misión Completada!</h2>
+        <p class="text-xl">¡Has conseguido un diamante! Gracias por tu valiosa colaboración. Tus respuestas han sido guardadas.</p>
+    </div>
+
+    <script>
+        const form = document.getElementById('minecraftSurvey');
+        const surveyContainer = document.getElementById('survey-container');
+        const thankYouMessage = document.getElementById('thank-you-message');
+        const progressBar = document.getElementById('progressBar');
+        const questions = document.querySelectorAll('[data-question]');
+        const totalQuestions = questions.length;
+        const answeredQuestions = new Set();
+
+        function updateProgress() {
+            const progressPercentage = (answeredQuestions.size / totalQuestions) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+        }
+
+        questions.forEach((question, index) => {
+            const inputs = question.querySelectorAll('input[type="radio"], textarea');
+            inputs.forEach(input => {
+                const eventType = input.tagName === 'TEXTAREA' ? 'input' : 'change';
+                input.addEventListener(eventType, () => {
+                    answeredQuestions.add(index);
+                    updateProgress();
+                });
+            });
+        });
+
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const formData = new FormData(form);
+            const data = {
+                q1: formData.get('q1'), q2: formData.get('q2'), q3: formData.get('q3'), q4: formData.get('q4'),
+                q5_choice: formData.get('q5_choice'), q5_reason: document.getElementById('q5_reason').value,
+                q6_choice: formData.get('q6_choice'), q6_reason: document.getElementById('q6_reason').value,
+                q7: formData.get('q7'), q8: formData.get('q8'), q9: formData.get('q9'), q10: formData.get('q10'),
+            };
+
+            try {
+                const response = await fetch('http://127.0.0.1:5000/submit', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data),
+                });
+                if (!response.ok) throw new Error(`Error del servidor: ${response.statusText}`);
+                
+                surveyContainer.style.transition = 'opacity 0.5s ease-out';
+                surveyContainer.style.opacity = '0';
+                setTimeout(() => {
+                    surveyContainer.classList.add('hidden');
+                    thankYouMessage.classList.remove('hidden');
+                    thankYouMessage.style.opacity = '0';
+                    thankYouMessage.style.transition = 'opacity 0.5s ease-in';
+                    setTimeout(() => { thankYouMessage.style.opacity = '1'; }, 50);
+                }, 500);
+
+            } catch (error) {
+                console.error('No se pudo enviar la encuesta:', error);
+                alert('Hubo un problema al enviar tu encuesta. Revisa la consola del servidor Python y la consola del navegador (F12) para ver los errores.');
+            }
+        });
+        
+        updateProgress();
+    </script>
+</body>
+</html>
